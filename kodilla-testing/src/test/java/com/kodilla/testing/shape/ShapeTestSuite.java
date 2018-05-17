@@ -4,6 +4,7 @@ import org.junit.*;
 
 public class ShapeTestSuite {
     private static int testCounter = 0;
+    private final ShapeCollector shapeCollector = new ShapeCollector();
 
     @BeforeClass
     public static void beforeAllTests() {
@@ -23,7 +24,6 @@ public class ShapeTestSuite {
 
     @Test
     public void testAddFigure() {
-        ShapeCollector shapeCollector = new ShapeCollector();
         Shape shape = new Circle(2.0);
 
         shapeCollector.addFigure(shape);
@@ -33,7 +33,7 @@ public class ShapeTestSuite {
 
     @Test
     public void testRemoveFigure() {
-        ShapeCollector shapeCollector = new ShapeCollector();
+
         Shape shape = new Circle(2.0);
         shapeCollector.addFigure(shape);
 
@@ -45,7 +45,7 @@ public class ShapeTestSuite {
 
     @Test
     public void testGetFigure() {
-        ShapeCollector shapeCollector = new ShapeCollector();
+
         Shape shape = new Circle(2.0);
         shapeCollector.addFigure(shape);
 
@@ -57,7 +57,7 @@ public class ShapeTestSuite {
 
     @Test
     public void showFigure() {
-        ShapeCollector shapeCollector = new ShapeCollector();
+
         Shape shape = new Circle(2.0);
         shapeCollector.addFigure(shape);
 
