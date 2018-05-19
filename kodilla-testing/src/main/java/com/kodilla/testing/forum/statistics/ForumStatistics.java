@@ -13,11 +13,17 @@ public class ForumStatistics {
         numberPosts = statistics.postsCount();
         numberComments = statistics.commentsCount();
 
-        averagePostsPerUser = numberPosts / numberUsers;
-        averageCommentsPerUser = numberComments / numberUsers;
-        averageCommentsPerPost = numberComments / numberPosts;
+        averagePostsPerUser = (double)numberPosts / numberUsers;
+        averageCommentsPerUser = (double)numberComments / numberUsers;
+        averageCommentsPerPost = (double)numberComments / numberPosts;
     }
-    void showStatistics() {}
+
+
+    void showStatistics() {
+        System.out.println("averagePostsPerUser=" + averagePostsPerUser);
+        System.out.println("averageCommentsPerUser=" + averageCommentsPerUser);
+        System.out.println("averageCommentsPerPost=" + averageCommentsPerPost);
+    }
 
 
 }
