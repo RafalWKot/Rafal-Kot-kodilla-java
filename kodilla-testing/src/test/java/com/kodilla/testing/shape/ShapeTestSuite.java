@@ -58,9 +58,11 @@ public class ShapeTestSuite {
     @Test
     public void showFigure() {
 
-        Shape shape = new Circle(2.0);
-        shapeCollector.addFigure(shape);
+        shapeCollector.addFigure(new Circle(2.0));
+        shapeCollector.addFigure(new Square(3.0));
+        shapeCollector.addFigure(new Triangle(2.0,2.0,3.0));
 
-        Assert.assertEquals("Circle", shapeCollector.getFigure(0).getShapeName());
+        Assert.assertEquals(3,shapeCollector.showFigures().size());
+
     }
 }

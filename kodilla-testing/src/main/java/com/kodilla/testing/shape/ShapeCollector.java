@@ -1,6 +1,7 @@
 package com.kodilla.testing.shape;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ShapeCollector {
 
@@ -27,10 +28,8 @@ public class ShapeCollector {
         return shape;
     }
 
-    public void showFigures() {
-        for (Shape shape : shapes) {
-            shape.toString();
-        }
+    public List<Shape> showFigures() {
+        return shapes;
     }
 
 
