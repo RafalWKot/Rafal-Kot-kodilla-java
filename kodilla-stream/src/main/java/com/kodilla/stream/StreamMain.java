@@ -1,31 +1,22 @@
 package com.kodilla.stream;
 
-import com.kodilla.stream.beautifier.PoemBeautifier;
-import com.kodilla.stream.iterate.NumbersGenerator;
+import com.kodilla.stream.forumuser.Forum;
+import com.kodilla.stream.forumuser.ForumUser;
+import java.time.LocalDate;
+import java.util.stream.Collectors;
+import java.util.Map;
 
 public class StreamMain {
     public static void main(String[] args) {
-        PoemBeautifier poemBeautifier = new PoemBeautifier();
+        Forum theForumUser = new Forum();
+        Map<Integer, ForumUser> theResultUserList = theForumUser.getUserList().stream()
+                .filter(user -> user.getSex() == 'M')
+                .filter(user -> user.getBirthOfDate().isBefore(LocalDate.of(1998,5,22)))
+                .filter(user -> user.getPostsCount() > 0)
+                .collect(Collectors.toMap(ForumUser::getIdUser, user ->user));
 
-        poemBeautifier.beautify("car",text -> text.toUpperCase());
-        poemBeautifier.beautify("girl",text -> "A->" + text +"<-A");
-        poemBeautifier.beautify("beautiful",text -> {
-            String result = text.charAt(0) + "_";
-            for (int i = 1; i < text.length() -1 ; i++) {
-                result = result + text.charAt(i) + "_";
-            }
-            result = result + text.charAt(text.length() - 1);
-            return result;
-        } );
-        poemBeautifier.beautify("night",text -> {
-            String result = String.valueOf(text.charAt(text.length() - 1));
-            for (int i = text.length() - 2; i >= 0; i--) {
-                result = result + text.charAt(i);
-            }
-            return result;
-        });
-
-        System.out.println("Using Stream to generate even numbers from 1 to 20");
-        NumbersGenerator.generateEven(20);
+        theResultUserList.entrySet().stream()
+                .map(entry -> entry.getKey() + ": " + entry.getValue())
+                .forEach(System.out::println);
     }
 }
