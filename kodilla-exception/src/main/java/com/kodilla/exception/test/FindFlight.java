@@ -10,26 +10,14 @@ public class FindFlight {
         airportsMap.put("Heathrow", true);
         airportsMap.put("Denver", false);
 
-        boolean result = false;
-        boolean status = true;
-
-        System.out.println(airportsMap.get(flight.getArrivalAirport()));
-        System.out.println(airportsMap.containsKey(flight.getArrivalAirport()));
-        /*
-        for (Map.Entry<String, Boolean> entry: airportsMap.entrySet()) {
-            if(flight.getArrivalAirport().equals(entry.getKey())) {
-                if ( entry.getValue()) result = true;
-                status = false;
-            }
-        }
-        if(status) throw new RouteNotFoundException("No airport in the base");
-        */
-        return result;
+        if(!airportsMap.containsKey(flight.getArrivalAirport())) throw new RouteNotFoundException("No airport in the base");
+        if(airportsMap.get(flight.getArrivalAirport())) return true;
+        return false;
     }
 
     public static void main(String[] args) {
         Flight flight = new Flight("Miami", "Chicago-O’Hare");
-        //Flight flight = new Flight("Miami", "Heathrow");
+
         try {
             if(new FindFlight().findFlight(flight)) {
                 System.out.println("The flight is possible");
