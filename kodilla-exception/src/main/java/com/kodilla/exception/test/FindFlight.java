@@ -11,8 +11,7 @@ public class FindFlight {
         airportsMap.put("Denver", false);
 
         if(!airportsMap.containsKey(flight.getArrivalAirport())) throw new RouteNotFoundException("No airport in the base");
-        if(airportsMap.get(flight.getArrivalAirport())) return true;
-        return false;
+        return airportsMap.get(flight.getArrivalAirport());
     }
 
     public static void main(String[] args) {
