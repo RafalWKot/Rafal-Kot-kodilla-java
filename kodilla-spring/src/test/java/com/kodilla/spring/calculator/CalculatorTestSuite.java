@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class CalculatorTestSuite {
 
     @Test
-    public void testCalculations() {
+    public void testAddCalculations() {
         //Given
         ApplicationContext context =
                 new AnnotationConfigApplicationContext("com.kodilla.spring");
@@ -22,14 +22,54 @@ public class CalculatorTestSuite {
 
         //When
         double add = calculator.add(1,2);
-        double sub = calculator.sub(5,3);
-        double mul = calculator.mul(3,4);
-        double div = calculator.div(10,2);
 
         //Then
         Assert.assertEquals(3,add,0);
+
+    }
+    @Test
+    public void testSubCalculations() {
+        //Given
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext("com.kodilla.spring");
+
+        Calculator calculator = context.getBean(Calculator.class);
+
+        //When
+        double sub = calculator.sub(5,3);
+
+
+        //Then
         Assert.assertEquals(2,sub,0);
+
+    }
+    @Test
+    public void testMulCalculations() {
+        //Given
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext("com.kodilla.spring");
+
+        Calculator calculator = context.getBean(Calculator.class);
+
+        //When
+        double mul = calculator.mul(3,4);
+
+
+        //Then
         Assert.assertEquals(12,mul,0);
+    }
+    @Test
+    public void testDivCalculations() {
+        //Given
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext("com.kodilla.spring");
+
+        Calculator calculator = context.getBean(Calculator.class);
+
+        //When
+        double div = calculator.div(10,2);
+
+        //Then
         Assert.assertEquals(5,div,0);
     }
 }
