@@ -1,21 +1,28 @@
 package com.kodilla.patterns.singleton;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class LoggerTestSuite {
+    private static Logger logger;
+
+    @BeforeClass
+    public static void setInstance() {
+        logger = Logger.getLoggerInstance();
+        logger.log("create task");
+        logger.log("delete task");
+    }
+
 
     @Test
-    public void testGetLasLog() {
+    public void testGetLastLog() {
 
         //Given
-        Logger logger = Logger.getLoggerInstance();
-
 
         //Then
-        logger.log("Last log.");
 
         //When
-        Assert.assertEquals("Last log.",logger.getLastLog());
+        Assert.assertEquals("delete task",logger.getLastLog());
     }
 }
