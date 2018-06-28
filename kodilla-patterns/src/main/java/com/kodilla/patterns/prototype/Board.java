@@ -3,7 +3,7 @@ package com.kodilla.patterns.prototype;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Board extends Prototype{
+public class Board extends Prototype<Board>{
     private String name;
     private Set<TasksList> lists = new HashSet<>();
 
@@ -33,11 +33,11 @@ public class Board extends Prototype{
     }
 
     public Board shallowCopy() throws  CloneNotSupportedException {
-        return (Board)super.clone();
+        return super.clone();
     }
 
     public Board deepCopy() throws CloneNotSupportedException {
-        Board clonedBoard = (Board)super.clone();
+        Board clonedBoard = super.clone();
         clonedBoard.lists = new HashSet<>();
         for(TasksList theList : lists) {
             TasksList clonedList = new TasksList(theList.getName());
