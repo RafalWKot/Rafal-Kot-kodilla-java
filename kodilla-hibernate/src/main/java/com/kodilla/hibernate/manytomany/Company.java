@@ -5,6 +5,11 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedQuery(
+        name = "Company.retrieveCompanyNameBySubstring",
+        query = "FROM Company WHERE substring(company_name,1,3) = :SUBSTRINGNAME"
+)
+
 @Entity
 @Table(name = "COMPANIES")
 public class Company {
