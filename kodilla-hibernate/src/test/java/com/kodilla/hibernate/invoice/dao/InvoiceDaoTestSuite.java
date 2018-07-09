@@ -10,9 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.transaction.Transactional;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -31,25 +32,19 @@ public class InvoiceDaoTestSuite {
     public void testInvoiceDaoSave(){
 
         //Given
-        List<Product> products = new ArrayList<>();
-        products.add(new Product("Pen"));
-        products.add(new Product("Pencil"));
+        List<Product> products = Arrays.asList(new Product("Pen"), new Product("Pencil"));
 
         List<Item> items = new ArrayList<>();
         items.add(new Item(products.get(0), BigDecimal.valueOf(10.0), 2, BigDecimal.valueOf(20.0)));
-        products.get(0).getItems().add(items.get(0));
         items.add(new Item(products.get(0), BigDecimal.valueOf(15.0), 3, BigDecimal.valueOf(45.0)));
-        products.get(0).getItems().add(items.get(1));
         items.add(new Item(products.get(1), BigDecimal.valueOf(5.0), 1, BigDecimal.valueOf(5)));
-        products.get(1).getItems().add(items.get(2));
 
         Invoice invoice = new Invoice("001/2018");
+        invoice.setItems(items);
+        items.forEach(t->t.setInvoice(invoice));
 
         //When;
         invoiceDao.save(invoice);
-        invoice.setItems(items);
-        items.forEach(t -> t.setInvoice(invoice));
-        productDao.save(products);
 
         //Then
         Assert.assertEquals(true, invoiceDao.existsByNumber("001/2018"));
@@ -58,8 +53,6 @@ public class InvoiceDaoTestSuite {
 
         //CleanUp
         try {
-            itemDao.delete(items);
-            productDao.delete(products);
             invoiceDao.delete(invoice);
         }
         catch (Exception e){
