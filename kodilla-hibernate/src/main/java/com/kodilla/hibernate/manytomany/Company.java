@@ -7,7 +7,7 @@ import java.util.List;
 
 @NamedQuery(
         name = "Company.retrieveCompanyNameBySubstring",
-        query = "FROM Company WHERE substring(company_name,1,3) = :SUBSTRINGNAME"
+        query = "FROM Company WHERE company_name LIKE CONCAT(:SUBSTRINGNAME,'%')"
 )
 
 @Entity

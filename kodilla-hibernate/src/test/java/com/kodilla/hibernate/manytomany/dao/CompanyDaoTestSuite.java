@@ -94,7 +94,7 @@ public class CompanyDaoTestSuite {
 
 
         //Then
-        Assert.assertEquals("John", employeeDao.retrieveEmployeeByName("John").get(0).getFirstname());
+        Assert.assertEquals("John", employeeDao.retrieveEmployeeByName("Smith").get(0).getFirstname());
         Assert.assertEquals("Data Maesters", companyDao.retrieveCompanyNameBySubstring("Dat").get(0).getName());
 
         //CleanUp
