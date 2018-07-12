@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class Flight {
     private final int flightId;
-    private final AirportService airportFrom;
-    private final AirportService airportTo;
+    private final String airportFrom;
+    private final String airportTo;
     private final double flightPrice;
 
-    public Flight(int flightId, AirportService airportFrom, AirportService airpottTo, double flightPrice) {
+    public Flight(int flightId, String airportFrom, String airpottTo, double flightPrice) {
         this.flightId = flightId;
         this.airportFrom = airportFrom;
         this.airportTo = airpottTo;
@@ -20,12 +20,12 @@ public class Flight {
         return flightId;
     }
 
-    public AirportService getAirportFrom() {
+    public String getAirportFrom() {
 
         return airportFrom;
     }
 
-    public AirportService getAirportTo() {
+    public String getAirportTo() {
 
         return airportTo;
     }
@@ -54,7 +54,11 @@ public class Flight {
 
     @Override
     public String toString() {
-
-        return "FROM " + airportFrom.toString() + " TO " + airportTo.toString() + " PRICE: " + flightPrice;
+        return "Flight{" +
+                "flightId=" + flightId +
+                ", airportFrom='" + airportFrom + '\'' +
+                ", airportTo='" + airportTo + '\'' +
+                ", flightPrice=" + flightPrice +
+                '}';
     }
 }
