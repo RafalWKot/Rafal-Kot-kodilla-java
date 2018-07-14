@@ -6,13 +6,11 @@ public class Flight {
     private final int flightId;
     private final String airportFrom;
     private final String airportTo;
-    private final double flightPrice;
 
-    public Flight(int flightId, String airportFrom, String airpottTo, double flightPrice) {
+    public Flight(int flightId, String airportFrom, String airpottTo) {
         this.flightId = flightId;
         this.airportFrom = airportFrom;
         this.airportTo = airpottTo;
-        this.flightPrice = flightPrice;
     }
 
     public int getFlightId() {
@@ -30,18 +28,12 @@ public class Flight {
         return airportTo;
     }
 
-    public double getFlightPrice() {
-
-        return flightPrice;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Flight flight = (Flight) o;
         return flightId == flight.flightId &&
-                Double.compare(flight.flightPrice, flightPrice) == 0 &&
                 Objects.equals(airportFrom, flight.airportFrom) &&
                 Objects.equals(airportTo, flight.airportTo);
     }
@@ -49,7 +41,7 @@ public class Flight {
     @Override
     public int hashCode() {
 
-        return Objects.hash(flightId, airportFrom, airportTo, flightPrice);
+        return Objects.hash(flightId, airportFrom, airportTo);
     }
 
     @Override
@@ -58,7 +50,6 @@ public class Flight {
                 "flightId=" + flightId +
                 ", airportFrom='" + airportFrom + '\'' +
                 ", airportTo='" + airportTo + '\'' +
-                ", flightPrice=" + flightPrice +
                 '}';
     }
 }
