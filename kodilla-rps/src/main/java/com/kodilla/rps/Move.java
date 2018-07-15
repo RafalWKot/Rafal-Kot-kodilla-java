@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Move {
-    String moveName;
-    List<String> winWith;
-    List<String> loseWith;
+    private String moveName;
+    private List<String> winWith;
+    private List<String> loseWith;
 
     public Move(String moveName, List<String> winWith, List<String> loseWith) {
         this.moveName = moveName;

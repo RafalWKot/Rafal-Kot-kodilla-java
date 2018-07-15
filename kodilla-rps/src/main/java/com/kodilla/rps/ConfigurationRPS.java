@@ -22,16 +22,16 @@ public class ConfigurationRPS implements Configuration {
 
     @Override
     public String getDescription() {
-        return  "Wybrałeś Papier - Kamień - Nożyce. /n /n" +
-                "Oto krótkie zasady. /n" +
-                "Gra składa się z kolejnych tur. W każdej turze ty i komputer wybieracie:  papier, kamień lub nożyce. /n" +
-                "Gracz, który wybrał silniejszy symbol, otrzymuje jeden punkt. /n" +
-                "W przypadku wybrania dwóch takich samych symboli następuje remis – punktu brak." +
-                "Oto hierarchia symboli: /n" +
-                "nożyce są silniejsze od papieru, ponieważ go tną, /n" +
-                "kamień jest silniejszy od nożyc, ponieważ je tępi, /n" +
-                "papier jest silniejszy od kamienia, ponieważ go owija. /n" +
-                "Gracz, który pierwszy uzyska umówioną wcześniej ilość punktów, wygrywa partię. /n" +
+        return  "Wybrałeś Papier - Kamień - Nożyce. \n" +
+                "Oto krótkie zasady. \n" +
+                "Gra składa się z kolejnych tur. W każdej turze ty i komputer wybieracie:  papier, kamień lub nożyce. \n" +
+                "Gracz, który wybrał silniejszy symbol, otrzymuje jeden punkt. \n" +
+                "W przypadku wybrania dwóch takich samych symboli następuje remis – punktu brak. \n" +
+                "Oto hierarchia symboli: \n" +
+                "nożyce są silniejsze od papieru, ponieważ go tną, \n" +
+                "kamień jest silniejszy od nożyc, ponieważ je tępi, \n" +
+                "papier jest silniejszy od kamienia, ponieważ go owija. \n" +
+                "Gracz, który pierwszy uzyska umówioną wcześniej ilość punktów, wygrywa partię. \n" +
                 "No to zaczynamy! Powodzenia!";
     }
 }

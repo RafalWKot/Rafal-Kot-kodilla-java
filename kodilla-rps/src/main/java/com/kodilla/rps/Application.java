@@ -12,7 +12,7 @@ public class Application {
         Scanner scanner = new Scanner(System.in);
         String name = scanner.nextLine();
 
-        System.out.println("Witaj " + name + " w grze RPS");
+        System.out.println("\nWitaj " + name + " w grze RPS");
 
         List<Game> games = new ArrayList<>();
         List<Configuration> configurations = new ArrayList<>();
@@ -27,13 +27,17 @@ public class Application {
                 System.out.println(configurations.get(i).getGameName());
             }
 
-            System.out.println("Twój wybór: ");
+            System.out.println("\nTwój wybór: ");
             int choice = scanner.nextInt();
-
+            System.out.println("\n");
+            System.out.println(configurations.get(choice - 1).getDescription());
             games.add(new Game(configurations.get(choice - 1)));
             games.get(games.size() - 1).runGame();
 
-
+            System.out.println("Czy chcesz zagrać jeszcze raz. (1 - tak, 2 - nie)");
+            if(scanner.nextInt() == 2) {
+                end = true;
+            }
         }
 
     }
