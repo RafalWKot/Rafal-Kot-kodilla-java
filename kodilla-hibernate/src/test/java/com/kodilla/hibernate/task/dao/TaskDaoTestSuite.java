@@ -37,40 +37,40 @@ public class TaskDaoTestSuite {
         //CleanUp
         taskDao.delete(id);
     }
-
-    @Test
-    public void testTaskDaoFindByDuration() {
-        //Given
-        Task task = new Task(DESCRIPTION, 7);
-        taskDao.save(task);
-        int duration = task.getDuration();
-
-        //When
-        List<Task> readTasks = taskDao.findByDuration(duration);
-
-        //Then
-        Assert.assertEquals(1, readTasks.size());
-
-        //CleanUp
-        int id = readTasks.get(0).getId();
-        taskDao.delete(id);
-    }
-
-    @Test
-    public void testTaskDaoSaveWithFinancialDetails() {
-        //Given
-        Task task = new Task(DESCRIPTION, 30);
-        task.setTaskFinancialDetails(new TaskFinancialDetails(new BigDecimal(120), false));
-
-        //When
-        taskDao.save(task);
-        int id = task.getId();
-
-        //Then
-        Assert.assertNotEquals(0, id);
-
-        //CleanUp
-        taskDao.delete(id);
-    }
+//
+//    @Test
+//    public void testTaskDaoFindByDuration() {
+//        //Given
+//        Task task = new Task(DESCRIPTION, 7);
+//        taskDao.save(task);
+//        int duration = task.getDuration();
+//
+//        //When
+//        List<Task> readTasks = taskDao.findByDuration(duration);
+//
+//        //Then
+//        Assert.assertEquals(1, readTasks.size());
+//
+//        //CleanUp
+//        int id = readTasks.get(0).getId();
+//        taskDao.delete(id);
+//    }
+//
+//    @Test
+//    public void testTaskDaoSaveWithFinancialDetails() {
+//        //Given
+//        Task task = new Task(DESCRIPTION, 30);
+//        task.setTaskFinancialDetails(new TaskFinancialDetails(new BigDecimal(120), false));
+//
+//        //When
+//        taskDao.save(task);
+//        int id = task.getId();
+//
+//        //Then
+//        Assert.assertNotEquals(0, id);
+//
+//        //CleanUp
+//        taskDao.delete(id);
+//    }
 
 }

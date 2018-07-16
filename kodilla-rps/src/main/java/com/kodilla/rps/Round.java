@@ -1,29 +1,20 @@
 package com.kodilla.rps;
 
-import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 import java.util.Random;
 import java.util.Scanner;
 
+@RequiredArgsConstructor
+@Getter
+@EqualsAndHashCode
 public class Round {
-    private Configuration configuration;
+    private final Configuration configuration;
     private String result;
     private Move humanMove;
     private Move computerMove;
-
-    public Round(Configuration configuration) {
-        this.configuration = configuration;
-    }
-    public String getResult() {
-        return result;
-    }
-
-    public Move getHumanMove() {
-        return humanMove;
-    }
-
-    public Move getComputerMove() {
-        return computerMove;
-    }
 
     public void setHumanMove(Move humanMove) {
         this.humanMove = humanMove;
@@ -32,36 +23,22 @@ public class Round {
     public void setComputerMove(Move computerMove) {
         this.computerMove = computerMove;
     }
-
     public void setResult(String result) {
         this.result = result;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Round round = (Round) o;
-        return Objects.equals(result, round.result) &&
-                Objects.equals(humanMove, round.humanMove) &&
-                Objects.equals(computerMove, round.computerMove);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(result, humanMove, computerMove);
-    }
 
     public void runRound() {
-        System.out.println("Wybierz symbol: (wybierz numer)");
+        System.out.println("Wybierz symbol: (wybierz odpowiedninumer)");
+
         for (int j = 0; j < configuration.getPossibleMoves().size(); j++) {
-            System.out.print(j + 1);
-            System.out.println(" " + configuration.getPossibleMoves().get(j).getMoveName());
+            System.out.println(j + 1 +" " + configuration.getPossibleMoves().get(j).getMoveName());
         }
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nTwój symbol :");
         int choice = scanner.nextInt();
+
 
         setHumanMove(configuration.getPossibleMoves().get(choice - 1));
         randComputerMove();
@@ -87,4 +64,6 @@ public class Round {
         Random random = new Random();
         setComputerMove(configuration.getPossibleMoves().get(random.nextInt(3)));
     }
+
+
 }

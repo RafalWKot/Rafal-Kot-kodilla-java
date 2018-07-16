@@ -13,7 +13,6 @@ public class Game {
 
     public Game(Configuration configuration) {
         this.configuration = configuration;
-        this.quantityOfRounds = quantityOfRounds;
     }
 
     public Configuration getConfiguration() {
