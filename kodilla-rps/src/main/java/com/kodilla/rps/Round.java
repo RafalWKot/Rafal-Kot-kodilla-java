@@ -3,6 +3,7 @@ package com.kodilla.rps;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -12,42 +13,26 @@ import java.util.Scanner;
 @EqualsAndHashCode
 public class Round {
     private final Configuration configuration;
-    private String result;
-    private Move humanMove;
-    private Move computerMove;
+    @Setter private String result;
+    @Setter private Move humanMove;
+    @Setter private Move computerMove;
 
-    public void setHumanMove(Move humanMove) {
-        this.humanMove = humanMove;
-    }
-
-    public void setComputerMove(Move computerMove) {
-        this.computerMove = computerMove;
-    }
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-
-    public void runRound() {
-        System.out.println("Wybierz symbol: (wybierz odpowiedninumer)");
-
+    private void humanMove() {
+        System.out.println("Wybierz symbol: ");
         for (int j = 0; j < configuration.getPossibleMoves().size(); j++) {
-            System.out.println(j + 1 +" " + configuration.getPossibleMoves().get(j).getMoveName());
+            System.out.println(j + 1 +" "+ configuration.getPossibleMoves().get(j).getMoveName());
         }
-
-        Scanner scanner = new Scanner(System.in);
         System.out.println("\nTwój symbol :");
-        int choice = scanner.nextInt();
-
-
-        setHumanMove(configuration.getPossibleMoves().get(choice - 1));
-        randComputerMove();
-        System.out.print("\nTy wybrales: " + getHumanMove().getMoveName() + " - Komputer wybral: " + getComputerMove().getMoveName() );
-        setResult(fight());
-        System.out.println(" --> " + getResult());
+        Scanner scanner = new Scanner(System.in);
+        setHumanMove(configuration.getPossibleMoves().get(scanner.nextInt() - 1));
     }
 
-    public String fight() {
+    private void computerMove() {
+        Random random = new Random();
+        setComputerMove(configuration.getPossibleMoves().get(random.nextInt(getConfiguration().getPossibleMoves().size())));
+    }
+
+    private String fight() {
         if(humanMove.equals(computerMove)) {
             return "REMIS";
         }
@@ -59,11 +44,11 @@ public class Round {
             return "PRZEGRALES";
         }
     }
-
-    public void randComputerMove() {
-        Random random = new Random();
-        setComputerMove(configuration.getPossibleMoves().get(random.nextInt(3)));
+    public void runRound() {
+        humanMove();
+        computerMove();
+        System.out.print("\nTy wybrales: " + humanMove.getMoveName() + " - Komputer wybral: " + computerMove.getMoveName() );
+        setResult(fight());
+        System.out.println(" --> " + result);
     }
-
-
 }

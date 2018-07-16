@@ -9,9 +9,9 @@ public class ConfigurationRPS implements Configuration {
     @Override
     public List<Move> getPossibleMoves() {
         List<Move> possibleMoves = new ArrayList<>();
-        possibleMoves.add(new Move("Rock", Arrays.asList("Scissors"), Arrays.asList("Paper")));
-        possibleMoves.add(new Move("Paper", Arrays.asList("Rock"), Arrays.asList("Scissors")));
-        possibleMoves.add(new Move("Scissors", Arrays.asList("Paper"), Arrays.asList("Rock")));
+        possibleMoves.add(new Move("Kamień", Arrays.asList("Nożyce"), Arrays.asList("Papier")));
+        possibleMoves.add(new Move("Papier", Arrays.asList("Kamień"), Arrays.asList("Nożyce")));
+        possibleMoves.add(new Move("Nożyce", Arrays.asList("Papier"), Arrays.asList("Kamień")));
         return possibleMoves;
     }
 
@@ -32,6 +32,6 @@ public class ConfigurationRPS implements Configuration {
                 "kamień jest silniejszy od nożyc, ponieważ je tępi, \n" +
                 "papier jest silniejszy od kamienia, ponieważ go owija. \n" +
                 "Gracz, który pierwszy uzyska umówioną wcześniej ilość punktów, wygrywa partię. \n" +
-                "No to zaczynamy! Powodzenia!";
+                "No to zaczynamy! Powodzenia! \n";
     }
 }
