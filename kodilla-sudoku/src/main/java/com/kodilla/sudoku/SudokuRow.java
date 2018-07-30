@@ -11,23 +11,23 @@ import java.util.stream.IntStream;
 @Getter
 @EqualsAndHashCode
 public class SudokuRow {
-    public static int ELEMENTQUANTITY = 9;
-    private List<SudokuElement> sudokuElements = new ArrayList<>();
+    public static int ELEMENTSQUANTITYINROW = 9;
+    private List<SudokuElement> sudokuElementsInRow = new ArrayList<>();
 
     SudokuRow() {
-        IntStream.range(0, ELEMENTQUANTITY).forEach(i -> sudokuElements.add(new SudokuElement()));
+        IntStream.range(0, ELEMENTSQUANTITYINROW).forEach(i -> sudokuElementsInRow.add(new SudokuElement()));
     }
 
     @Override
     public String toString() {
-        return "| " + sudokuElements.get(0).printMark() +
-                " | " + sudokuElements.get(1).printMark() +
-                " | " + sudokuElements.get(2).printMark() +
-                " || " + sudokuElements.get(3).printMark() +
-                " | " + sudokuElements.get(4).printMark() +
-                " | " + sudokuElements.get(5).printMark() +
-                " || " + sudokuElements.get(6).printMark() +
-                " | " + sudokuElements.get(7).printMark() +
-                " | " + sudokuElements.get(8).printMark() + " |";
+        return "| " + sudokuElementsInRow.get(0).printMark() +
+                " | " + sudokuElementsInRow.get(1).printMark() +
+                " | " + sudokuElementsInRow.get(2).printMark() +
+                " || " + sudokuElementsInRow.get(3).printMark() +
+                " | " + sudokuElementsInRow.get(4).printMark() +
+                " | " + sudokuElementsInRow.get(5).printMark() +
+                " || " + sudokuElementsInRow.get(6).printMark() +
+                " | " + sudokuElementsInRow.get(7).printMark() +
+                " | " + sudokuElementsInRow.get(8).printMark() + " |";
     }
 }

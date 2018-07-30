@@ -1,2 +1,3 @@
 Sudoku 1.0
 Witaj! Chcesz rozwiązać Sudoku? Tak? To zaczynamy!!
+Rozwiązanie Sudoku.

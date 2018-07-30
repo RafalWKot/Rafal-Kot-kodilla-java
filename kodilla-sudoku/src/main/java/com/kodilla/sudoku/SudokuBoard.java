@@ -23,7 +23,7 @@ public class SudokuBoard {
     public void fillFromFile(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
         createEmpty();
-        IntStream.range(0, ROWQUANTITY).forEach(i -> sudokuRows.get(i).getSudokuElements().stream().
+        IntStream.range(0, ROWQUANTITY).forEach(i -> sudokuRows.get(i).getSudokuElementsInRow().stream().
                 forEach(t -> t.setValue(scanner.nextInt())));
         scanner.close();
     }

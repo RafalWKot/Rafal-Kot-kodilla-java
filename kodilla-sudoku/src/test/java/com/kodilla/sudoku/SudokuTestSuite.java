@@ -8,9 +8,7 @@ import java.util.List;
 
 public class SudokuTestSuite {
 
-
-
-    public void readSudokuFromFile(Application app, SudokuBoard sudokuBoard) {
+    private void readSudokuFromFile(Application app, SudokuBoard sudokuBoard) {
         try {
             sudokuBoard.fillFromFile(app.getFile("sudoku1.txt"));
         } catch (FileNotFoundException e) {
@@ -28,8 +26,8 @@ public class SudokuTestSuite {
 
 
         //Then
-        Assert.assertEquals(Integer.valueOf(SudokuElement.EMPTY), sudokuBoard.getSudokuRows().get(4).getSudokuElements().get(0).getValue());
-        Assert.assertEquals(Integer.valueOf(SudokuElement.EMPTY), sudokuBoard.getSudokuRows().get(6).getSudokuElements().get(7).getValue());
+        Assert.assertEquals(Integer.valueOf(SudokuElement.EMPTY), sudokuBoard.getSudokuRows().get(4).getSudokuElementsInRow().get(0).getValue());
+        Assert.assertEquals(Integer.valueOf(SudokuElement.EMPTY), sudokuBoard.getSudokuRows().get(6).getSudokuElementsInRow().get(7).getValue());
     }
 
     @Test
@@ -41,12 +39,12 @@ public class SudokuTestSuite {
         ValidationBoard validationBoard = new ValidationBoard(sudokuBoard);
 
         //When
-        validationBoard.verifyRows(4);
-        validationBoard.verifyRows(6);
+        validationBoard.findPossibilitiesInRow(4);
+        validationBoard.findPossibilitiesInRow(6);
 
         //Then
-        Assert.assertEquals(Arrays.asList(2,4,6,8,9), sudokuBoard.getSudokuRows().get(4).getSudokuElements().get(0).getPossibleValues());
-        Assert.assertEquals(Arrays.asList(2,4,6,7,8,9), sudokuBoard.getSudokuRows().get(6).getSudokuElements().get(7).getPossibleValues());
+        Assert.assertEquals(Arrays.asList(2,4,6,8,9), sudokuBoard.getSudokuRows().get(4).getSudokuElementsInRow().get(0).getPossibleValues());
+        Assert.assertEquals(Arrays.asList(2,4,6,7,8,9), sudokuBoard.getSudokuRows().get(6).getSudokuElementsInRow().get(7).getPossibleValues());
     }
 
     @Test
@@ -58,12 +56,12 @@ public class SudokuTestSuite {
         ValidationBoard validationBoard = new ValidationBoard(sudokuBoard);
 
         //When
-        validationBoard.verifyColumn(0);
-        validationBoard.verifyColumn(7);
+        validationBoard.findPossibilitiesInColumn(0);
+        validationBoard.findPossibilitiesInColumn(7);
 
         //Then
-        Assert.assertEquals(Arrays.asList(4,7,8,9), sudokuBoard.getSudokuRows().get(4).getSudokuElements().get(0).getPossibleValues());
-        Assert.assertEquals(Arrays.asList(1,2,3,5,8,9), sudokuBoard.getSudokuRows().get(6).getSudokuElements().get(7).getPossibleValues());
+        Assert.assertEquals(Arrays.asList(4,7,8,9), sudokuBoard.getSudokuRows().get(4).getSudokuElementsInRow().get(0).getPossibleValues());
+        Assert.assertEquals(Arrays.asList(1,2,3,5,8,9), sudokuBoard.getSudokuRows().get(6).getSudokuElementsInRow().get(7).getPossibleValues());
     }
 
     @Test
@@ -75,12 +73,12 @@ public class SudokuTestSuite {
         ValidationBoard validationBoard = new ValidationBoard(sudokuBoard);
 
         //When
-        validationBoard.veryfiSquare(4, 0);
-        validationBoard.veryfiSquare(6, 7);
+        validationBoard.findPossibilitiesInSquare(4, 0);
+        validationBoard.findPossibilitiesInSquare(6, 7);
 
         //Then
-        Assert.assertEquals(Arrays.asList(1,6,7,8,9), sudokuBoard.getSudokuRows().get(4).getSudokuElements().get(0).getPossibleValues());
-        Assert.assertEquals(Arrays.asList(1,2,7,8,9), sudokuBoard.getSudokuRows().get(6).getSudokuElements().get(7).getPossibleValues());
+        Assert.assertEquals(Arrays.asList(1,6,7,8,9), sudokuBoard.getSudokuRows().get(4).getSudokuElementsInRow().get(0).getPossibleValues());
+        Assert.assertEquals(Arrays.asList(1,2,7,8,9), sudokuBoard.getSudokuRows().get(6).getSudokuElementsInRow().get(7).getPossibleValues());
     }
 
     @Test
@@ -89,9 +87,9 @@ public class SudokuTestSuite {
         Application app = new Application();
         SudokuBoard sudokuBoard = new SudokuBoard();
         readSudokuFromFile(app, sudokuBoard);
-        ValidationBoard validationBoard = new ValidationBoard(sudokuBoard);
-        SudokuGame sudokuGame = new SudokuGame(sudokuBoard, validationBoard);
-        validationBoard.veryfiAllBoard();
+
+        SudokuGame sudokuGame = new SudokuGame(sudokuBoard);
+        sudokuGame.getValidationBoard().findPossibilitiesForAllBoard();
 
 
         //When
@@ -110,13 +108,12 @@ public class SudokuTestSuite {
         Application app = new Application();
         SudokuBoard sudokuBoard = new SudokuBoard();
         readSudokuFromFile(app, sudokuBoard);
-        ValidationBoard validationBoard = new ValidationBoard(sudokuBoard);
-        SudokuGame sudokuGame = new SudokuGame(sudokuBoard, validationBoard);
-        validationBoard.veryfiAllBoard();
+        SudokuGame sudokuGame = new SudokuGame(sudokuBoard);
+        sudokuGame.getValidationBoard().findPossibilitiesForAllBoard();
         sudokuGame.boardElementsToList();
 
         //When
-        int quantityOfPossibleValuesInStep = sudokuGame.getMinNumberOfPossiblevalues();
+        int quantityOfPossibleValuesInStep = sudokuGame.getMinNumberOfPossibleValues();
 
         //Then
         Assert.assertEquals(1, quantityOfPossibleValuesInStep);
@@ -128,9 +125,8 @@ public class SudokuTestSuite {
         Application app = new Application();
         SudokuBoard sudokuBoard = new SudokuBoard();
         readSudokuFromFile(app, sudokuBoard);
-        ValidationBoard validationBoard = new ValidationBoard(sudokuBoard);
-        SudokuGame sudokuGame = new SudokuGame(sudokuBoard, validationBoard);
-        validationBoard.veryfiAllBoard();
+        SudokuGame sudokuGame = new SudokuGame(sudokuBoard);
+        sudokuGame.getValidationBoard().findPossibilitiesForAllBoard();
         sudokuGame.boardElementsToList();
 
         //When
@@ -147,20 +143,19 @@ public class SudokuTestSuite {
         Application app = new Application();
         SudokuBoard sudokuBoard = new SudokuBoard();
         readSudokuFromFile(app, sudokuBoard);
-        ValidationBoard validationBoard = new ValidationBoard(sudokuBoard);
-        SudokuGame sudokuGame = new SudokuGame(sudokuBoard, validationBoard);
-        validationBoard.veryfiAllBoard();
+        SudokuGame sudokuGame = new SudokuGame(sudokuBoard);
+        sudokuGame.getValidationBoard().findPossibilitiesForAllBoard();
         sudokuGame.boardElementsToList();
 
         //When
         try {
-            sudokuGame.takeStep(sudokuGame.getListOfIndexMinPossibleValues());
+            sudokuGame.setValueInEmptyPlace(sudokuGame.getListOfIndexMinPossibleValues());
         } catch (NoPossibleMoveToDo noPossibleMoveToDo) {
             noPossibleMoveToDo.printStackTrace();
         }
 
         //Then
-        Assert.assertEquals(Integer.valueOf(9) , sudokuBoard.getSudokuRows().get(8).getSudokuElements().get(8).getValue());
+        Assert.assertEquals(Integer.valueOf(9) , sudokuBoard.getSudokuRows().get(8).getSudokuElementsInRow().get(8).getValue());
 
 
     }

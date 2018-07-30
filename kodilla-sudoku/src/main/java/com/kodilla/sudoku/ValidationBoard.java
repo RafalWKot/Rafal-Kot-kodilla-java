@@ -6,40 +6,48 @@ import lombok.AllArgsConstructor;
 public class ValidationBoard {
     private static int SQUAREBYCOLUMN = 3;
     private static int SQUAREBYROW = 3;
+    private static int SQUAREBYSIDEBOARD = 3;
     private SudokuBoard sudokuBoard;
 
-    //usuwa możliwe ruchy dla danego pola w wierszu
-    public void verifyRows(int rowNumber) {
-        for (int i = 0; i < SudokuRow.ELEMENTQUANTITY; i++) {
-            if(sudokuBoard.getSudokuRows().get(rowNumber).getSudokuElements().get(i).getValue() == SudokuElement.EMPTY) {
-                for (SudokuElement sudokuElement: sudokuBoard.getSudokuRows().get(rowNumber).getSudokuElements()) {
-                    sudokuBoard.getSudokuRows().get(rowNumber).getSudokuElements().get(i).getPossibleValues().remove(sudokuElement.getValue());
+    public void findPossibilitiesInRow(int rowNumber) {
+        for (int i = 0; i < SudokuRow.ELEMENTSQUANTITYINROW; i++) {
+            if(sudokuBoard.getSudokuRows().get(rowNumber).getSudokuElementsInRow().get(i).getValue() == SudokuElement.EMPTY) {
+                for (SudokuElement sudokuElement: sudokuBoard.getSudokuRows().get(rowNumber).getSudokuElementsInRow()) {
+                    sudokuBoard.getSudokuRows().get(rowNumber)
+                                .getSudokuElementsInRow().get(i)
+                                    .getPossibleValues()
+                                        .remove(sudokuElement.getValue());
                 }
             }
         }
     }
-    //usuwa możliwe ruchy dla danego pola w kolumnie
-    public void verifyColumn(int columnNumber) {
-        for (int i = 0; i < SudokuRow.ELEMENTQUANTITY; i++) {
-            if (sudokuBoard.getSudokuRows().get(i).getSudokuElements().get(columnNumber).getValue() == SudokuElement.EMPTY) {
-                for (int j = 0; j < SudokuRow.ELEMENTQUANTITY; j++) {
-                    sudokuBoard.getSudokuRows().get(i).getSudokuElements().get(columnNumber).getPossibleValues().remove(sudokuBoard.getSudokuRows().get(j).getSudokuElements().get(columnNumber).getValue());
+
+    public void findPossibilitiesInColumn(int columnNumber) {
+        for (int i = 0; i < SudokuRow.ELEMENTSQUANTITYINROW; i++) {
+            if (sudokuBoard.getSudokuRows().get(i).getSudokuElementsInRow().get(columnNumber).getValue() == SudokuElement.EMPTY) {
+                for (int j = 0; j < SudokuRow.ELEMENTSQUANTITYINROW; j++) {
+                    sudokuBoard.getSudokuRows().get(i)
+                                 .getSudokuElementsInRow().get(columnNumber)
+                                    .getPossibleValues()
+                                        .remove(sudokuBoard.getSudokuRows().get(j).getSudokuElementsInRow().get(columnNumber).getValue());
                 }
             }
         }
     }
-    // możliwe ruchy z jednego kwadrata, nalezy podac index pierwszego elementu w kwadracie
-    public void veryfiSquare(int row, int column) {
-        row = Math.round(row / 3) * 3;
-        column = Math.round(column / 3) * 3;
+
+    public void findPossibilitiesInSquare(int rowNumber, int columnNumber) {
+        int firstElementInSquareByRow = Math.round(rowNumber / 3) * 3;
+        int firstElementInSquareByCOlumn = Math.round(columnNumber / 3) * 3;
 
         for (int k = 0; k < SQUAREBYROW; k++) {
             for (int l = 0; l < SQUAREBYCOLUMN; l++) {
                 for (int i = 0; i < SQUAREBYROW; i++) {
                     for (int j = 0; j < SQUAREBYCOLUMN; j++) {
-                        if (sudokuBoard.getSudokuRows().get(row + k).getSudokuElements().get(column + l).getValue() == SudokuElement.EMPTY) {
-                            sudokuBoard.getSudokuRows().get(row + k).getSudokuElements().get(column + l).getPossibleValues().
-                                    remove(sudokuBoard.getSudokuRows().get(row + i).getSudokuElements().get(column + j).getValue());
+                        if (sudokuBoard.getSudokuRows().get(firstElementInSquareByRow + k).getSudokuElementsInRow().get(firstElementInSquareByCOlumn + l).getValue() == SudokuElement.EMPTY) {
+                            sudokuBoard.getSudokuRows().get(firstElementInSquareByRow + k)
+                                            .getSudokuElementsInRow().get(firstElementInSquareByCOlumn + l)
+                                                .getPossibleValues()
+                                                    .remove(sudokuBoard.getSudokuRows().get(firstElementInSquareByRow + i).getSudokuElementsInRow().get(firstElementInSquareByCOlumn + j).getValue());
                         }
                     }
                 }
@@ -47,22 +55,22 @@ public class ValidationBoard {
         }
     }
 
-    public void veryfiRowColumnSquareByIndex(int row, int column) {
-        verifyRows(row);
-        verifyColumn(column);
-        veryfiSquare(row, column);
+    public void findPossibilitiesForRowColumnSquareByIndex(int rowNumber, int columnNumber) {
+        findPossibilitiesInRow(rowNumber);
+        findPossibilitiesInColumn(columnNumber);
+        findPossibilitiesInSquare(rowNumber, columnNumber);
     }
 
-    public  void veryfiAllBoard() {
-        for (int i = 0; i < SudokuRow.ELEMENTQUANTITY; i++) {
-            verifyRows(i);
+    public  void findPossibilitiesForAllBoard() {
+        for (int i = 0; i < SudokuBoard.ROWQUANTITY; i++) {
+            findPossibilitiesInRow(i);
         }
-        for (int i = 0; i < SudokuRow.ELEMENTQUANTITY; i++) {
-            verifyColumn(i);
+        for (int i = 0; i < SudokuRow.ELEMENTSQUANTITYINROW; i++) {
+            findPossibilitiesInColumn(i);
         }
-        for (int i = 0; i < SQUAREBYROW; i++) {
-            for (int j = 0; j < SQUAREBYCOLUMN; j++) {
-                veryfiSquare(i*3, j*3);
+        for (int i = 0; i < SQUAREBYSIDEBOARD; i++) {
+            for (int j = 0; j < SQUAREBYSIDEBOARD; j++) {
+                findPossibilitiesInSquare(i * SQUAREBYROW, j * SQUAREBYCOLUMN );
             }
         }
     }

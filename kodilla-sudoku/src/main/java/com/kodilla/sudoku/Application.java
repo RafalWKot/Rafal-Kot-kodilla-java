@@ -9,6 +9,7 @@ public class Application {
     public static void main(String[] args) {
 
         Application app = new Application();
+
         Texts texts = new Texts((app.getFile("textsPL.txt")));
         try {
             texts.readTexts();
@@ -19,25 +20,27 @@ public class Application {
         System.out.println(texts.getIntroduce());
 
         SudokuBoard sudokuBoard = new SudokuBoard();
-        ValidationBoard validationBoard = new ValidationBoard(sudokuBoard);
+
         try {
             sudokuBoard.fillFromFile(app.getFile("sudoku1.txt"));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Brak pliku z Sudoku");
         }
 
-        SudokuGame sudokuGame = new SudokuGame(sudokuBoard, validationBoard);
+        SudokuGame sudokuGame = new SudokuGame(sudokuBoard);
 
         System.out.println(sudokuBoard.toString());
 
-        sudokuGame.run();
-
+        boolean gameFinished = false;
+        while(!gameFinished) {
+            try {
+                gameFinished = sudokuGame.resolveSudoku();
+            } catch (NoPossibleMoveToDo noPossibleMoveToDo) {
+                System.out.println("Sudoku nie do rowiązania!");
+            }
+        }
+        System.out.println(texts.getRosolve());
         System.out.println(sudokuBoard.toString());
-
-        sudokuGame.run();
-
-        System.out.println(sudokuBoard.toString());
-
     }
 
     public File getFile(String fileName) {

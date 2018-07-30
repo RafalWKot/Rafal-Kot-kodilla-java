@@ -1,7 +1,6 @@
 package com.kodilla.sudoku;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,78 +8,91 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
+
 public class SudokuGame {
     private final SudokuBoard sudokuBoard;
-    private final ValidationBoard validationBoard;
+    @Getter private ValidationBoard validationBoard;
     @Getter private List<SudokuElement> sudokuElementsList;
+    private boolean atFirstCheckAllBoard = true;
 
+    public SudokuGame(SudokuBoard sudokuBoard) {
+        this.sudokuBoard = sudokuBoard;
+        validationBoard = new ValidationBoard(sudokuBoard);
+    }
 
-    public void run() {
-        validationBoard.veryfiAllBoard();
-        boardElementsToList();
+    public boolean resolveSudoku() throws NoPossibleMoveToDo {
 
-        try {
-            takeStep(getListOfIndexMinPossibleValues());
-        } catch (NoPossibleMoveToDo noPossibleMoveToDo) {
-            noPossibleMoveToDo.printStackTrace();
+        if (atFirstCheckAllBoard) {
+            validationBoard.findPossibilitiesForAllBoard();
+            atFirstCheckAllBoard = false;
         }
+
+        boardElementsToList();
+        setValueInEmptyPlace(getListOfIndexMinPossibleValues());
+
+        return isSudokuFinished();
     }
 
     public int getRowNumberFromIndexList(int indexMinPossibleValues) {
-        return Math.round(indexMinPossibleValues / SudokuRow.ELEMENTQUANTITY);
+        return Math.round(indexMinPossibleValues / SudokuRow.ELEMENTSQUANTITYINROW);
     }
 
     public int getColumnNumberFromIndexList(int indexMinPossibleValues) {
-        return Math.round(indexMinPossibleValues % SudokuRow.ELEMENTQUANTITY);
+        return Math.round(indexMinPossibleValues % SudokuRow.ELEMENTSQUANTITYINROW);
     }
 
-    // 1. pakujemy elementy do listy
     public void boardElementsToList() {
-        sudokuElementsList = sudokuBoard.getSudokuRows().stream().
-                flatMap(row -> row.getSudokuElements().stream()).
-                collect(Collectors.toList());
-    }
-    // 2. szukamy elementu lub elementów gdzie jest najmniej możliwości ruchu
-    public int getMinNumberOfPossiblevalues() {
-        return Collections.min(sudokuElementsList.stream().
-                map(t -> t.getPossibleValues().size()).
-                collect(Collectors.toList()));
+        sudokuElementsList = sudokuBoard.getSudokuRows().stream()
+                .flatMap(row -> row.getSudokuElementsInRow().stream())
+                .collect(Collectors.toList());
     }
 
-    // 3. zwraca listę indeksów gdzie jest najmniej możliwości ruchu w kroku
+    public int getMinNumberOfPossibleValues() {
+        return Collections.min(sudokuElementsList.stream()
+                .map(t -> t.getPossibleValues().size())
+                .collect(Collectors.toList()));
+    }
+
     public List<Integer> getListOfIndexMinPossibleValues() {
-        int minValues = getMinNumberOfPossiblevalues();
+        int minValues = getMinNumberOfPossibleValues();
 
         List<Integer> listOfIndex = new ArrayList<>();
-
         for (int i = 0; i < sudokuElementsList.size(); i++) {
-            if (sudokuElementsList.get(i).getPossibleValues().size() == minValues) {
+            if (sudokuElementsList.get(i).getPossibleValues().size() == minValues && sudokuElementsList.get(i).getValue() == SudokuElement.EMPTY) {
                 listOfIndex.add(i);
             }
         }
         return  listOfIndex;
     }
 
-    // 4. wykonywany jest ruch
-    public void  takeStep(List<Integer> listOfIndex) throws NoPossibleMoveToDo {
+    public boolean isSudokuFinished() {
+        if(sudokuElementsList.stream().filter(t -> t.getValue() == SudokuElement.EMPTY).count() == 0) return true;
+        return false;
+    }
+
+    public void setValueInEmptyPlace(List<Integer> listOfIndex) throws NoPossibleMoveToDo {
         if (listOfIndex.isEmpty()) {
             throw new NoPossibleMoveToDo();
-        } else if (listOfIndex.size() == 1) { // gdy jest jedno minimum ale wiecej możliwośći to co ??
-
-            sudokuBoard.getSudokuRows().get(getRowNumberFromIndexList(listOfIndex.get(0))).getSudokuElements().get(getColumnNumberFromIndexList(listOfIndex.get(0))).
-                    setValue(sudokuBoard.getSudokuRows().get(getRowNumberFromIndexList(listOfIndex.get(0))).getSudokuElements().get(getColumnNumberFromIndexList(listOfIndex.get(0))).getPossibleValues().get(0));
-        } else {
-            System.out.println("wiele możliwośći");
-            //musi losować w polu oraz losować którą wartośc wpisać
-//        Random random = new Random();
-//        int moveValue =  random.nextInt(listOfIndex.size());
-//        //sudokuBoard.getSudokuRows().get(getRowNumberFromIndexList(listOfIndex.get(moveValue))).getSudokuElements().get(getColumnNumberFromIndexList(listOfIndex.get(moveValue)));
         }
+
+        Random random = new Random();
+        int choosenMove = random.nextInt(listOfIndex.size());
+        int choosenValue = random.nextInt(sudokuBoard.getSudokuRows().get(getRowNumberFromIndexList(listOfIndex.get(choosenMove)))
+                                                        .getSudokuElementsInRow().get(getColumnNumberFromIndexList(listOfIndex.get(choosenMove)))
+                                                            .getPossibleValues().size());
+
+        sudokuBoard.getSudokuRows().get(getRowNumberFromIndexList(listOfIndex.get(choosenMove)))
+                        .getSudokuElementsInRow().get(getColumnNumberFromIndexList(listOfIndex.get(choosenMove)))
+                            .setValue(sudokuBoard.getSudokuRows().get(getRowNumberFromIndexList(listOfIndex.get(choosenMove)))
+                                    .getSudokuElementsInRow().get(getColumnNumberFromIndexList(listOfIndex.get(choosenMove)))
+                                        .getPossibleValues().get(choosenValue)
+                            );
+
+        validationBoard.findPossibilitiesForRowColumnSquareByIndex(getRowNumberFromIndexList(listOfIndex.get(choosenMove)),getColumnNumberFromIndexList(listOfIndex.get(choosenMove)));
     }
 
-    //do usuniecia ostatecznie
-    public void printPosibilities() {
-        sudokuElementsList.stream().forEach(t -> System.out.println(t.getPossibleValues().toString()));
-    }
+    //metoda testowa - do usuniecia ostatecznie
+//    public void printPosibilities() {
+//        sudokuElementsList.stream().forEach(t -> System.out.println(t.getPossibleValues().toString()));
+//    }
 }

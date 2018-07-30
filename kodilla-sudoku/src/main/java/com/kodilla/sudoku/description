@@ -1,0 +1,27 @@
+Opis logiki
+
+1. Metody klasy ValidationBoard odpowiadają za zweryfikowanie możliwości wstawienia wartości dla pustych pól odpowiednio
+    dla elementów w wierszu, kolumnie i w kwadracie
+
+2. W klasie SudokuGame następuję wstawienie elementu w odpowiednie pole, czyli tzw. jeden "krok" rozwiązania
+
+    Wybranie miejsca do wstawienia oraz odpowiedniej wartości przebiega następująco:
+
+    2.0 Odbywa się weryfikacja wszystkich pól sudoku pod kątem możliwych wartości do wstawienia (odbywa się to raz na Sudoku)
+
+    2.1 Wszystkie SudokuElement "pakowane" są do listy.
+
+    2.2 Z listy wybierany jest ten element lub elementy, które mają najmniej możliwich wartości do wstawienia.
+
+    2.3 Jeżeli jest to wiecej niż jedno pole  odbywa się losowanie.
+
+    2.4 Jeżeli w wybranym polu może byc wiecej niż jedna możliwość, również odbywa się losowanie.
+
+    2.5 Wartość zostaje wstawiona.
+
+    2.6 Odbywa się weryfikacja tylko tego wiersza, kolumny i kwadratu dla którego wartość została wstawiona.
+
+    2.7 Kroki się powtarzają aż do całkowitego rozwiązania Sudoku.
+
+    2.8 Jeżeli w pewnym kroku dla jednego z pol nie ma żadnych możliwych wartości do wstawienia, a Sudoku nie zostało jeszcze
+        rozwiązanie zostaje zgłoszony wyjątek.
