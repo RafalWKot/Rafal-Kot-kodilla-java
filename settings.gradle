@@ -10,4 +10,5 @@ include 'kodilla-spring'
 include 'kodilla-spring-web'
 include 'kodilla-hibernate'
 include 'kodilla-rps'
+include 'kodilla-sudoku'
 

@@ -47,7 +47,7 @@ public class Round {
     public void runRound() {
         humanMove();
         computerMove();
-        System.out.print("\nTy wybrales: " + humanMove.getMoveName() + " - Komputer wybral: " + computerMove.getMoveName() );
+        System.out.print("\nTy wybrales: " + humanMove.getMoveName() + " - Komputer wybral: " + computerMove.getMoveName());
         setResult(fight());
         System.out.println(" --> " + result);
     }

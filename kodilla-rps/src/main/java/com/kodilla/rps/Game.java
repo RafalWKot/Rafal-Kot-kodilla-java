@@ -48,7 +48,8 @@ public class Game {
 
     @Override
     public String toString() {
-        return  "TY = " + humanPoints +
+        return  "Rund " + quantityOfRounds +
+                " TY = " + humanPoints +
                 " vs COMPUTER  = " + computerPoints;
     }
 
