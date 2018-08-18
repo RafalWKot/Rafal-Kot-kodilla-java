@@ -1,12 +1,15 @@
 package com.kodilla.sudoku;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 
 public class SudokuTestSuite {
+
+    private Application app;
 
     private void readSudokuFromFile(Application app, SudokuBoard sudokuBoard) {
         try {
@@ -16,10 +19,14 @@ public class SudokuTestSuite {
         }
     }
 
+    @Before
+    public void setUp() throws Exception {
+        app = new Application();
+    }
+
     @Test
     public void testCheckValueOfElement() {
         //Given
-        Application app = new Application();
         SudokuBoard sudokuBoard = new SudokuBoard();
         readSudokuFromFile(app, sudokuBoard);
         //When

@@ -5,10 +5,16 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-@NamedQuery(
-        name = "Company.retrieveCompanyNameBySubstring",
-        query = "FROM Company WHERE company_name LIKE CONCAT(:SUBSTRINGNAME,'%')"
-)
+@NamedQueries(
+        {
+                @NamedQuery(
+                        name = "Company.retrieveCompanyNameBySubstring",
+                        query = "FROM Company WHERE company_name LIKE CONCAT(:SUBSTRINGNAME,'%')"),
+                @NamedQuery(
+                        name = "Company.retrieveCompanyNameByStringPart",
+                        query = "FROM Company Where company_name LIKE CONCAT('%',:ARG,'%')")
+
+        })
 
 @Entity
 @Table(name = "COMPANIES")

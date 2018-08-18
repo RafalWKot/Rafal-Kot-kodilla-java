@@ -2,6 +2,7 @@ package com.kodilla.sudoku;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Objects;
 
 
 public class Application {
@@ -32,7 +33,7 @@ public class Application {
         System.out.println(sudokuBoard.toString());
 
         boolean gameFinished = false;
-        while(!gameFinished) {
+        while(!gameFinished) {  //wyjatek out
             try {
                 gameFinished = sudokuGame.resolveSudoku();
             } catch (NoPossibleMoveToDo noPossibleMoveToDo) {
@@ -43,8 +44,8 @@ public class Application {
         System.out.println(sudokuBoard.toString());
     }
 
-    public File getFile(String fileName) {
+    public  File getFile(String fileName) {
         ClassLoader classLoader = getClass().getClassLoader();
-        return  new File(classLoader.getResource(fileName).getFile());
+        return  new File(Objects.requireNonNull(classLoader.getResource(fileName)).getFile());
     }
 }
