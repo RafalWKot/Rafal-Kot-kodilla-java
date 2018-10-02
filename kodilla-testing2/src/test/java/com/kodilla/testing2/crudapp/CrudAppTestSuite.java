@@ -38,6 +38,7 @@ public class CrudAppTestSuite {
         sendTestTaskToTrello(taskName);
         assertTrue(checkTaskExistsInTrello(taskName));
         deleteTaskFromCrudApp(taskName);
+
     }
 
     private String createCrudAppTestTask() throws InterruptedException {
@@ -79,6 +80,8 @@ public class CrudAppTestSuite {
                 });
 
         Thread.sleep(5000);
+        driver.switchTo().alert().accept();
+
     }
 
     private boolean checkTaskExistsInTrello(String taskName) throws InterruptedException {
@@ -99,11 +102,10 @@ public class CrudAppTestSuite {
 
         Thread.sleep(2000);
 
-        result = driverTrello.findElements(By.xpath("//span")).stream()
-                .filter(theSpan -> theSpan.getText().contains(taskName))
+        result = driverTrello.findElements(By.xpath("//span[@class=\"list-card-title js-card-name\"]")).stream()
+                .filter(theSpan -> theSpan.getText().equals(taskName))
                 .collect(Collectors.toList())
                 .size() > 0;
-
         driverTrello.close();
 
         return result;
